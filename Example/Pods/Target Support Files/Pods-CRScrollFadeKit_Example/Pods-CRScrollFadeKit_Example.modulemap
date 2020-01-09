@@ -1,0 +1,6 @@
+framework module Pods_CRScrollFadeKit_Example {
+  umbrella header "Pods-CRScrollFadeKit_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,6 @@
+framework module CRScrollFadeKit {
+  umbrella header "CRScrollFadeKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

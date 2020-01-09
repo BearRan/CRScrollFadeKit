@@ -1,0 +1,22 @@
+{
+  "name": "CRScrollFadeKit",
+  "version": "0.1.0",
+  "summary": "A short description of CRScrollFadeKit.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/BearRan/CRScrollFadeKit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "BearRan": "18255362173@163.com"
+  },
+  "source": {
+    "git": "https://github.com/BearRan/CRScrollFadeKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "CRScrollFadeKit/Classes/**/*"
+}

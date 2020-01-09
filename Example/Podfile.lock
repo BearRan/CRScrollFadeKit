@@ -1,0 +1,27 @@
+PODS:
+  - CRScrollFadeKit (0.1.0)
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+
+DEPENDENCIES:
+  - CRScrollFadeKit (from `../`)
+  - FBSnapshotTestCase
+
+SPEC REPOS:
+  trunk:
+    - FBSnapshotTestCase
+
+EXTERNAL SOURCES:
+  CRScrollFadeKit:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  CRScrollFadeKit: 73c27f9cb9cfbcd8420c24bac3b365b357fa62b3
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+
+PODFILE CHECKSUM: 373a20cd1fcda181e64f19e138ef3a8494c3818a
+
+COCOAPODS: 1.8.4
