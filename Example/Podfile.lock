@@ -5,12 +5,16 @@ PODS:
   - FBSnapshotTestCase/Core (2.1.4)
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
+  - Masonry (1.1.0)
 
 DEPENDENCIES:
   - CRScrollFadeKit (from `../`)
   - FBSnapshotTestCase
+  - Masonry
 
 SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Masonry
   trunk:
     - FBSnapshotTestCase
 
@@ -21,7 +25,8 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   CRScrollFadeKit: 73c27f9cb9cfbcd8420c24bac3b365b357fa62b3
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
 
-PODFILE CHECKSUM: 373a20cd1fcda181e64f19e138ef3a8494c3818a
+PODFILE CHECKSUM: a7df7235048f59fb9e8ad6fb573c69def9858610
 
 COCOAPODS: 1.8.4

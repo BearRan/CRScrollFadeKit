@@ -17,7 +17,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    
+    [self addTestBtn];
+}
+
+- (void)addTestBtn
+{
+    UIButton *testBtn = [[UIButton alloc] init];
+    testBtn.backgroundColor = [UIColor orangeColor];
+    [testBtn setTitle:@"Test" forState:UIControlStateNormal];
+    [self.view addSubview:testBtn];
+    [testBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.width.height.equalTo(@200);
+        make.centerX.centerY.equalTo(@0);
+    }];
 }
 
 - (void)didReceiveMemoryWarning
