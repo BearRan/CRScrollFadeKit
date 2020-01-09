@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '8.0'
+
+target 'CRScrollFadeKit_Example' do
+  pod 'CRScrollFadeKit', :path => '../'
+
+  target 'CRScrollFadeKit_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase'
+  end
+end
