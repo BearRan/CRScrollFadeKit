@@ -8,7 +8,7 @@
 
 #import "CRScrollFadeConfig.h"
 
-@interface CRScrollFadeConfig ()
+@interface CRScrollFadeConfig () <CRScrollFadeProtocol>
 
 @property(nonatomic, assign, readwrite) CGFloat fadeValue;
 
@@ -33,6 +33,11 @@
     return self;
 }
 
+#pragma mark - CRScrollFadeProtocol
+- (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change {
+    
+}
+
 #pragma mark - Setter
 - (void)updateFadeValue:(CGFloat)fadeValue
 {
@@ -41,4 +46,5 @@
         self.fadeValueChangedBlock(fadeValue);
     }
 }
+
 @end

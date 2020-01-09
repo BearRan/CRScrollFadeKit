@@ -15,6 +15,14 @@ typedef NS_ENUM(NSInteger, CRScrollFadeDirection) {
     CRScrollFadeDirection_Horz, // 水平方向
 };
 
+@protocol CRScrollFadeProtocol <NSObject>
+
+@optional
+- (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change;
+
+@end
+
+
 UIKIT_EXTERN NSString *const CRScrollFadeKeyPath_ContentOffSet;
 
 @interface CRScrollFadeConst : NSObject
