@@ -14,9 +14,9 @@ NS_ASSUME_NONNULL_BEGIN
 @interface UIScrollView (CRScrollFadeKit)
 
 #pragma mark - Process Config
-- (void)crScrollFade_addScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig;
-- (void)crScrollFade_removeScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig;
-- (NSArray <CRScrollFadeConfig *> *)crScrollFade_getAllConfigArray;
+- (void)cr_addScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig;
+- (void)cr_removeScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig;
+- (NSArray <CRScrollFadeConfig *> *)cr_getAllConfigArray;
 
 @end
 
