@@ -41,7 +41,6 @@ typedef void(^FadeValueChangedBlock)(CGFloat fadeValue);
  *  0~1
  */
 @property(nonatomic, assign, readonly) CGFloat fadeValue;
-- (void)updateFadeValue:(CGFloat)fadeValue;
 
 // fadeValue改变时的回调
 @property(nonatomic, copy) FadeValueChangedBlock fadeValueChangedBlock;

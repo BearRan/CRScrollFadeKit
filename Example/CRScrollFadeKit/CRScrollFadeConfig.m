@@ -10,7 +10,7 @@
 
 @interface CRScrollFadeConfig () <CRScrollFadeProtocol>
 
-@property(nonatomic, assign, readwrite) CGFloat fadeValue;
+@property(nonatomic, assign, readwrite, setter=updateFadeValue:) CGFloat fadeValue;
 
 @end
 
