@@ -28,6 +28,7 @@
 		B1C5CE1C23C718C700683E11 /* CRCollectionViewTestVC.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C5CE1B23C718C700683E11 /* CRCollectionViewTestVC.m */; };
 		B1C5CE2323C71E6500683E11 /* CRScrollFadeConst.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C5CE2223C71E6500683E11 /* CRScrollFadeConst.m */; };
 		B1C5CE2623C720C600683E11 /* CRScrollFadeConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C5CE2523C720C600683E11 /* CRScrollFadeConfig.m */; };
+		B1C5CE2923C7262800683E11 /* UIScrollView+CRScrollFadeKit.m in Sources */ = {isa = PBXBuildFile; fileRef = B1C5CE2823C7262800683E11 /* UIScrollView+CRScrollFadeKit.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +75,8 @@
 		B1C5CE2223C71E6500683E11 /* CRScrollFadeConst.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRScrollFadeConst.m; sourceTree = "<group>"; };
 		B1C5CE2423C720C600683E11 /* CRScrollFadeConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CRScrollFadeConfig.h; sourceTree = "<group>"; };
 		B1C5CE2523C720C600683E11 /* CRScrollFadeConfig.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CRScrollFadeConfig.m; sourceTree = "<group>"; };
+		B1C5CE2723C7262800683E11 /* UIScrollView+CRScrollFadeKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+CRScrollFadeKit.h"; sourceTree = "<group>"; };
+		B1C5CE2823C7262800683E11 /* UIScrollView+CRScrollFadeKit.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+CRScrollFadeKit.m"; sourceTree = "<group>"; };
 		BBCFCDE9039D5B3D05690215 /* Pods-CRScrollFadeKit_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CRScrollFadeKit_Tests.release.xcconfig"; path = "Target Support Files/Pods-CRScrollFadeKit_Tests/Pods-CRScrollFadeKit_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BCB667956B44E81942C3E634 /* CRScrollFadeKit.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = CRScrollFadeKit.podspec; path = ../CRScrollFadeKit.podspec; sourceTree = "<group>"; };
 		C7E3D699FB81EAE59C154EB4 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
@@ -209,6 +212,8 @@
 				B1C5CE2223C71E6500683E11 /* CRScrollFadeConst.m */,
 				B1C5CE2423C720C600683E11 /* CRScrollFadeConfig.h */,
 				B1C5CE2523C720C600683E11 /* CRScrollFadeConfig.m */,
+				B1C5CE2723C7262800683E11 /* UIScrollView+CRScrollFadeKit.h */,
+				B1C5CE2823C7262800683E11 /* UIScrollView+CRScrollFadeKit.m */,
 			);
 			name = FadeKit;
 			sourceTree = "<group>";
@@ -413,6 +418,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1C5CE2923C7262800683E11 /* UIScrollView+CRScrollFadeKit.m in Sources */,
 				B1C5CE2623C720C600683E11 /* CRScrollFadeConfig.m in Sources */,
 				B1C5CE2323C71E6500683E11 /* CRScrollFadeConst.m in Sources */,
 				6003F59E195388D20070C39A /* CRAppDelegate.m in Sources */,
