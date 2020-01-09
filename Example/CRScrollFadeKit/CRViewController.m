@@ -7,6 +7,7 @@
 //
 
 #import "CRViewController.h"
+#import "CRListTestVC.h"
 
 @interface CRViewController ()
 
@@ -18,12 +19,14 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden = YES;
     [self addTestBtn];
 }
 
 - (void)addTestBtn
 {
     UIButton *testBtn = [[UIButton alloc] init];
+    [testBtn addTarget:self action:@selector(pushToListTestVC) forControlEvents:UIControlEventTouchUpInside];
     testBtn.backgroundColor = [UIColor orangeColor];
     [testBtn setTitle:@"Test" forState:UIControlStateNormal];
     [self.view addSubview:testBtn];
@@ -31,6 +34,11 @@
         make.width.height.equalTo(@200);
         make.centerX.centerY.equalTo(@0);
     }];
+}
+
+- (void)pushToListTestVC {
+    CRListTestVC *listTestVC = [CRListTestVC new];
+    [self.navigationController pushViewController:listTestVC animated:YES];
 }
 
 - (void)didReceiveMemoryWarning
