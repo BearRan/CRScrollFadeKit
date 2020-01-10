@@ -1,5 +1,5 @@
 //
-//  CRScrollFadeConfig.h
+//  CRScrollFadeListener.h
 //  CRScrollFadeKit_Example
 //
 //  Created by cc Chobit on 2020/1/9.
@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 typedef void(^FadeValueChangedBlock)(CGFloat fadeValue);
 
-@interface CRScrollFadeConfig : NSObject
+@interface CRScrollFadeListener : NSObject
 
 /** 监听滑动方向
  *  默认：CRScrollFadeDirection_Vert 垂直方向
@@ -44,6 +44,8 @@ typedef void(^FadeValueChangedBlock)(CGFloat fadeValue);
 
 // fadeValue改变时的回调
 @property(nonatomic, copy) FadeValueChangedBlock fadeValueChangedBlock;
+
++ (CRScrollFadeListener *)defaultConfig;
 
 @end
 

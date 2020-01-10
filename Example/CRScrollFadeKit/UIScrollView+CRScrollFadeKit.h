@@ -7,16 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "CRScrollFadeConfig.h"
+#import "CRScrollFadeListener.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface UIScrollView (CRScrollFadeKit)
 
 #pragma mark - Process Config
-- (void)cr_addScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig;
-- (void)cr_removeScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig;
-- (NSArray <CRScrollFadeConfig *> *)cr_getAllConfigArray;
+- (void)cr_addScrollFadeConfig:(CRScrollFadeListener *)scrollFadeConfig;
+- (void)cr_removeScrollFadeConfig:(CRScrollFadeListener *)scrollFadeConfig;
+- (NSArray <CRScrollFadeListener *> *)cr_getAllConfigArray;
 
 @end
 

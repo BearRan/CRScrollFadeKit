@@ -7,12 +7,12 @@
 //
 
 #import "UIScrollView+CRScrollFadeKit.h"
-#import "CRScrollFadeConfig.h"
+#import "CRScrollFadeListener.h"
 #import <objc/runtime.h>
 
 @interface UIScrollView (CRScrollFadeKit_Private) <CRScrollFadeProtocol>
 
-@property(nonatomic, strong) NSMutableArray <CRScrollFadeConfig *> *cr_configArray;
+@property(nonatomic, strong) NSMutableArray <CRScrollFadeListener *> *cr_listenerArray;
 
 @end
 
@@ -50,7 +50,7 @@
 - (void)cr_observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     if ([keyPath isEqualToString:CRScrollFadeKeyPath_ContentOffSet]) {
         // 对所有config对象发送消息
-        [self.cr_configArray enumerateObjectsUsingBlock:^(CRScrollFadeConfig * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        [self.cr_listenerArray enumerateObjectsUsingBlock:^(CRScrollFadeListener * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
             // 判断是否遵循协议
             if ([obj conformsToProtocol:@protocol(CRScrollFadeProtocol)]) {
                 // 判断是否实现了该方法
@@ -88,37 +88,37 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
 }
 
 #pragma mark - Param
-- (NSMutableArray <CRScrollFadeConfig *> *)cr_configArray {
+- (NSMutableArray <CRScrollFadeListener *> *)cr_listenerArray {
     NSMutableArray *tempConfigArray = objc_getAssociatedObject(self, _cmd);
     if (!tempConfigArray) {
         tempConfigArray = [NSMutableArray new];
-        self.cr_configArray = tempConfigArray;
+        self.cr_listenerArray = tempConfigArray;
     }
     
     return tempConfigArray;
 }
 
-- (void)setCr_configArray:(NSMutableArray<CRScrollFadeConfig *> *)cr_configArray {
-    objc_setAssociatedObject(self, @selector(cr_configArray), cr_configArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+- (void)setCr_listenerArray:(NSMutableArray<CRScrollFadeListener *> *)cr_listenerArray {
+    objc_setAssociatedObject(self, @selector(cr_listenerArray), cr_listenerArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Process Config
-- (void)cr_addScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig {
-    if (scrollFadeConfig && [scrollFadeConfig isKindOfClass:[CRScrollFadeConfig class]]) {
-        [self.cr_configArray addObject:scrollFadeConfig];
+- (void)cr_addScrollFadeConfig:(CRScrollFadeListener *)scrollFadeConfig {
+    if (scrollFadeConfig && [scrollFadeConfig isKindOfClass:[CRScrollFadeListener class]]) {
+        [self.cr_listenerArray addObject:scrollFadeConfig];
     }
 }
 
-- (void)cr_removeScrollFadeConfig:(CRScrollFadeConfig *)scrollFadeConfig {
-    if (scrollFadeConfig && [scrollFadeConfig isKindOfClass:[CRScrollFadeConfig class]]) {
-        if ([self.cr_configArray containsObject:scrollFadeConfig]) {
-            [self.cr_configArray removeObject:scrollFadeConfig];
+- (void)cr_removeScrollFadeConfig:(CRScrollFadeListener *)scrollFadeConfig {
+    if (scrollFadeConfig && [scrollFadeConfig isKindOfClass:[CRScrollFadeListener class]]) {
+        if ([self.cr_listenerArray containsObject:scrollFadeConfig]) {
+            [self.cr_listenerArray removeObject:scrollFadeConfig];
         }
     }
 }
 
-- (NSArray <CRScrollFadeConfig *> *)cr_getAllConfigArray {
-    return [self.cr_configArray copy];
+- (NSArray <CRScrollFadeListener *> *)cr_getAllConfigArray {
+    return [self.cr_listenerArray copy];
 }
 
 @end

@@ -1,24 +1,24 @@
 //
-//  CRScrollFadeConfig.m
+//  CRScrollFadeListener.m
 //  CRScrollFadeKit_Example
 //
 //  Created by cc Chobit on 2020/1/9.
 //  Copyright © 2020 BearRan. All rights reserved.
 //
 
-#import "CRScrollFadeConfig.h"
+#import "CRScrollFadeListener.h"
 
-@interface CRScrollFadeConfig () <CRScrollFadeProtocol>
+@interface CRScrollFadeListener () <CRScrollFadeProtocol>
 
 @property(nonatomic, assign, readwrite, setter=updateFadeValue:) CGFloat fadeValue;
 
 @end
 
-@implementation CRScrollFadeConfig
+@implementation CRScrollFadeListener
 
-+ (CRScrollFadeConfig *)defaultConfig
++ (CRScrollFadeListener *)defaultConfig
 {
-    return [CRScrollFadeConfig new];
+    return [CRScrollFadeListener new];
 }
 
 - (instancetype)init
