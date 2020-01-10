@@ -13,6 +13,8 @@
 @interface UIScrollView (CRScrollFadeKit_Private) <CRScrollFadeProtocol>
 
 @property(nonatomic, strong) NSMutableArray <CRScrollFadeListener *> *cr_listenerArray;
+@property(nonatomic, strong) NSNumber *cr_hasAddedObserver;
+@property(nonatomic, strong) NSNumber *cr_hasSwizzledKVOObserver;
 
 @end
 
@@ -27,23 +29,27 @@
         cr_swizzled_method(class,
                            @selector(willMoveToSuperview:),
                            @selector(cr_willMoveToSuperview:));
-        cr_swizzled_method(class,
-                           @selector(observeValueForKeyPath:ofObject:change:context:),
-                           @selector(cr_observeValueForKeyPath:ofObject:change:context:));
     });
 }
 
 #pragma mark 替换后的willMoveToSuperview
 - (void)cr_willMoveToSuperview:(UIView *)newSuperview {
-    // 移除旧的监听
-    [self cr_removeObservers];
+    if (self.cr_hasAddedObserver.boolValue) {
+        // 移除旧的监听
+        [self cr_removeObservers];
+    }
+    
+    
+    
+    [self cr_willMoveToSuperview:newSuperview];
     
     // 有新的父组件，则添加新的监听
     if (newSuperview) {
         [self cr_addObservers];
+        self.cr_hasAddedObserver = @YES;
+    }else{
+        self.cr_hasAddedObserver = @NO;
     }
-    
-    [self cr_willMoveToSuperview:newSuperview];
 }
 
 #pragma mark 替换后的KVO接收消息方法
@@ -61,7 +67,23 @@
             }
         }];
     }
-    [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    
+    Class currentClass = [self class];
+    IMP cr_classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(cr_observeValueForKeyPath:ofObject:change:context:)));
+    IMP classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(observeValueForKeyPath:ofObject:change:context:)));
+    
+    Class class = object_getClass(object);
+    Class superClass = class_getSuperclass(class);
+    NSLog(@"class---%@", class);
+    NSLog(@"superClass---%@", superClass);
+    
+    if ([self respondsToSelector:@selector(cr_observeValueForKeyPath:ofObject:change:context:)]) {
+        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+    
+//    if (classIMP) {
+//        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+//    }
 }
 
 #pragma mark 使用static inline创建静态内联函数，方便调用
@@ -69,10 +91,19 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
     Method originalMethod = class_getInstanceMethod(cls, originalSelector);
     Method swizzledMethod = class_getInstanceMethod(cls, swizzledSelector);
     
-    BOOL isAdd = class_addMethod(cls, originalSelector, method_getImplementation(swizzledMethod), method_getTypeEncoding(swizzledMethod));
-    if (isAdd) {
-        class_replaceMethod(cls, swizzledSelector, method_getImplementation(originalMethod), method_getTypeEncoding(originalMethod));
+    BOOL didAddMethod = class_addMethod(cls,
+                                        originalSelector,
+                                        method_getImplementation(swizzledMethod),
+                                        method_getTypeEncoding(swizzledMethod));
+    if (didAddMethod) {
+        // 没有要替换的方法，去父类中寻找
+        IMP superImp = method_getImplementation(originalMethod);
+        class_replaceMethod(cls,
+                            swizzledSelector,
+                            superImp,
+                            method_getTypeEncoding(originalMethod));
     }else {
+        // 有要替换方法，直接替换
         method_exchangeImplementations(originalMethod, swizzledMethod);
     }
 }
@@ -81,6 +112,17 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
 - (void)cr_addObservers {
     NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
     [self addObserver:self forKeyPath:CRScrollFadeKeyPath_ContentOffSet options:options context:nil];
+    
+    Class currentClass = [self class];
+//    IMP classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(cr_observeValueForKeyPath:ofObject:change:context:)));
+    // 未交换过，则进行交换
+    if (!self.cr_hasSwizzledKVOObserver.boolValue) {
+        Class class = [self class];
+        cr_swizzled_method(class,
+                           @selector(observeValueForKeyPath:ofObject:change:context:),
+                           @selector(cr_observeValueForKeyPath:ofObject:change:context:));
+        self.cr_hasSwizzledKVOObserver = @YES;
+    }
 }
 
 - (void)cr_removeObservers {
@@ -88,6 +130,7 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
 }
 
 #pragma mark - Param
+// cr_listenerArray
 - (NSMutableArray <CRScrollFadeListener *> *)cr_listenerArray {
     NSMutableArray *tempConfigArray = objc_getAssociatedObject(self, _cmd);
     if (!tempConfigArray) {
@@ -100,6 +143,36 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
 
 - (void)setCr_listenerArray:(NSMutableArray<CRScrollFadeListener *> *)cr_listenerArray {
     objc_setAssociatedObject(self, @selector(cr_listenerArray), cr_listenerArray, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+// cr_hasAddedObserver
+- (NSNumber *)cr_hasAddedObserver {
+    NSNumber *tempValue = objc_getAssociatedObject(self, _cmd);
+    if (!tempValue) {
+        tempValue = @NO;
+        self.cr_hasAddedObserver = tempValue;
+    }
+    
+    return tempValue;
+}
+
+- (void)setCr_hasAddedObserver:(NSNumber *)cr_hasAddedObserver {
+    objc_setAssociatedObject(self, @selector(cr_hasAddedObserver), cr_hasAddedObserver, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+// cr_hasSwizzledKVOObserver
+- (NSNumber *)cr_hasSwizzledKVOObserver {
+    NSNumber *tempValue = objc_getAssociatedObject(self, _cmd);
+    if (!tempValue) {
+        tempValue = @NO;
+        self.cr_hasSwizzledKVOObserver = tempValue;
+    }
+    
+    return tempValue;
+}
+
+- (void)setCr_hasSwizzledKVOObserver:(NSNumber *)cr_hasSwizzledKVOObserver {
+    objc_setAssociatedObject(self, @selector(cr_hasSwizzledKVOObserver), cr_hasSwizzledKVOObserver, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 #pragma mark - Process Config
