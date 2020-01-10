@@ -72,19 +72,38 @@
     IMP cr_classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(cr_observeValueForKeyPath:ofObject:change:context:)));
     IMP classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(observeValueForKeyPath:ofObject:change:context:)));
     
+    NSLog(@"--cr_classIMP:%p", cr_classIMP);
+//    cr_classIMP.SEL;
+//    SEL tmpSel = @selector(cr_observeValueForKeyPath:ofObject:change:context:);
+//    Method currentMethod = class_getInstanceMethod(currentClass, tmpSel);
+//    Method superMethod = class_getInstanceMethod([currentClass superclass], tmpSel);
+    
     Class class = object_getClass(object);
     Class superClass = class_getSuperclass(class);
     NSLog(@"class---%@", class);
     NSLog(@"superClass---%@", superClass);
     
-    if ([self respondsToSelector:@selector(cr_observeValueForKeyPath:ofObject:change:context:)]) {
-        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
+    
+    
+//    BOOL hasfindSuper = [[self class] findSuperImplementationKVOSel:@selector(cr_observeValueForKeyPath:ofObject:change:context:)];
+//    if (hasfindSuper) {
+//        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+//    }
+    
     
 //    if (classIMP) {
 //        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 //    }
 }
+
+//+ (BOOL)findSuperImplementationKVOSel:(SEL)sel {
+//    Class superClass = NULL;
+//    Class currentClass = self;
+//
+//    while (class_getInstanceMethod(currentClass, sel)) {
+//        superClass = [currentClass superclass];
+//    }
+//}
 
 #pragma mark 使用static inline创建静态内联函数，方便调用
 static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizzledSelector) {
@@ -112,6 +131,12 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
 - (void)cr_addObservers {
     NSKeyValueObservingOptions options = NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld;
     [self addObserver:self forKeyPath:CRScrollFadeKeyPath_ContentOffSet options:options context:nil];
+    
+//    if ([self respondsToSelector:@selector(observeValueForKeyPath:ofObject:change:context:)]) {
+//        NSLog(@"----have");
+//    }else{
+//        NSLog(@"----no");
+//    }
     
     Class currentClass = [self class];
 //    IMP classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(cr_observeValueForKeyPath:ofObject:change:context:)));

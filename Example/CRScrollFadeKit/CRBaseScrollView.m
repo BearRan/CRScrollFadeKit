@@ -1,14 +1,14 @@
 //
-//  CRTestScrollView.m
+//  CRBaseScrollView.m
 //  CRScrollFadeKit_Example
 //
 //  Created by cc Chobit on 2020/1/10.
 //  Copyright © 2020 BearRan. All rights reserved.
 //
 
-#import "CRTestScrollView.h"
+#import "CRBaseScrollView.h"
 
-@implementation CRTestScrollView
+@implementation CRBaseScrollView
 
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -18,8 +18,8 @@
 }
 */
 
-//- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-//    NSLog(@"---change:%@", change);
-//}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    NSLog(@"---change origin:%@", change);
+}
 
 @end
