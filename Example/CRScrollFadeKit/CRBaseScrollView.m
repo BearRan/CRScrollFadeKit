@@ -19,7 +19,7 @@
 */
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
-    NSLog(@"---change origin:%@", change);
+//    NSLog(@"---change origin:%@", change);
 }
 
 @end

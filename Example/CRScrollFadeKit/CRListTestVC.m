@@ -8,6 +8,7 @@
 
 #import "CRListTestVC.h"
 #import "CRTestScrollView.h"
+#import "UIScrollView+CRScrollFadeKit.h"
 
 @interface CRListTestVC ()
 
@@ -34,6 +35,12 @@
     UIView *testView = [[UIView alloc] initWithFrame:CGRectMake(300, 300, 100, 100)];
     testView.backgroundColor = [UIColor blueColor];
     [self.mainScrollView addSubview:testView];
+    
+    CRScrollFadeListener *fadeListener = [CRScrollFadeListener defaultConfig];
+    fadeListener.fadeValueChangedBlock = ^(CGFloat fadeValue) {
+        NSLog(@"--fadeValue:%f", fadeValue);
+    };
+    [self.mainScrollView cr_addScrollFadeListener:fadeListener];
 }
 
 

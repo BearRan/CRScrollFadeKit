@@ -35,7 +35,7 @@
 
 #pragma mark - CRScrollFadeProtocol
 - (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change {
-    
+    NSLog(@"--change000:%@", change);
 }
 
 #pragma mark - Setter

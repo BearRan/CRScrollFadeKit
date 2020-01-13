@@ -68,26 +68,26 @@
         }];
     }
     
-    Class currentClass = [self class];
-    IMP cr_classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(cr_observeValueForKeyPath:ofObject:change:context:)));
-    IMP classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(observeValueForKeyPath:ofObject:change:context:)));
-    
-    NSLog(@"--cr_classIMP:%p", cr_classIMP);
+//    Class currentClass = [self class];
+//    IMP cr_classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(cr_observeValueForKeyPath:ofObject:change:context:)));
+//    IMP classIMP = method_getImplementation(class_getInstanceMethod(currentClass, @selector(observeValueForKeyPath:ofObject:change:context:)));
+//
+//    NSLog(@"--cr_classIMP:%p", cr_classIMP);
 //    cr_classIMP.SEL;
 //    SEL tmpSel = @selector(cr_observeValueForKeyPath:ofObject:change:context:);
 //    Method currentMethod = class_getInstanceMethod(currentClass, tmpSel);
 //    Method superMethod = class_getInstanceMethod([currentClass superclass], tmpSel);
     
-    Class class = object_getClass(object);
-    Class superClass = class_getSuperclass(class);
-    NSLog(@"class---%@", class);
-    NSLog(@"superClass---%@", superClass);
-    
+//    Class class = object_getClass(object);
+//    Class superClass = class_getSuperclass(class);
+//    NSLog(@"class---%@", class);
+//    NSLog(@"superClass---%@", superClass);
+//
     
     
 //    BOOL hasfindSuper = [[self class] findSuperImplementationKVOSel:@selector(cr_observeValueForKeyPath:ofObject:change:context:)];
 //    if (hasfindSuper) {
-//        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+        [self cr_observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 //    }
     
     
@@ -201,21 +201,21 @@ static inline void cr_swizzled_method(Class cls ,SEL originalSelector, SEL swizz
 }
 
 #pragma mark - Process Config
-- (void)cr_addScrollFadeConfig:(CRScrollFadeListener *)scrollFadeConfig {
-    if (scrollFadeConfig && [scrollFadeConfig isKindOfClass:[CRScrollFadeListener class]]) {
-        [self.cr_listenerArray addObject:scrollFadeConfig];
+- (void)cr_addScrollFadeListener:(CRScrollFadeListener *)scrollFadeListener {
+    if (scrollFadeListener && [scrollFadeListener isKindOfClass:[CRScrollFadeListener class]]) {
+        [self.cr_listenerArray addObject:scrollFadeListener];
     }
 }
 
-- (void)cr_removeScrollFadeConfig:(CRScrollFadeListener *)scrollFadeConfig {
-    if (scrollFadeConfig && [scrollFadeConfig isKindOfClass:[CRScrollFadeListener class]]) {
-        if ([self.cr_listenerArray containsObject:scrollFadeConfig]) {
-            [self.cr_listenerArray removeObject:scrollFadeConfig];
+- (void)cr_removeScrollFadeListener:(CRScrollFadeListener *)scrollFadeListener {
+    if (scrollFadeListener && [scrollFadeListener isKindOfClass:[CRScrollFadeListener class]]) {
+        if ([self.cr_listenerArray containsObject:scrollFadeListener]) {
+            [self.cr_listenerArray removeObject:scrollFadeListener];
         }
     }
 }
 
-- (NSArray <CRScrollFadeListener *> *)cr_getAllConfigArray {
+- (NSArray <CRScrollFadeListener *> *)cr_getAllListenerArray {
     return [self.cr_listenerArray copy];
 }
 
