@@ -44,12 +44,12 @@
     };
     [self.mainScrollView cr_addScrollFadeListener:fadeListenerVert];
     
-    CRScrollFadeListener *fadeListenerHorz = [CRScrollFadeListener defaultConfig];
-    fadeListenerHorz.fadeDirection = CRScrollFadeDirection_Horz;
-    fadeListenerHorz.fadeValueChangedBlock = ^(CGFloat fadeValue, NSInteger page) {
-        NSLog(@"--fadeListener-Horz:%f, page:%ld", fadeValue, (long)page);
-    };
-    [self.mainScrollView cr_addScrollFadeListener:fadeListenerHorz];
+//    CRScrollFadeListener *fadeListenerHorz = [CRScrollFadeListener defaultConfig];
+//    fadeListenerHorz.fadeDirection = CRScrollFadeDirection_Horz;
+//    fadeListenerHorz.fadeValueChangedBlock = ^(CGFloat fadeValue, NSInteger page) {
+//        NSLog(@"--fadeListener-Horz:%f, page:%ld", fadeValue, (long)page);
+//    };
+//    [self.mainScrollView cr_addScrollFadeListener:fadeListenerHorz];
 }
 
 
