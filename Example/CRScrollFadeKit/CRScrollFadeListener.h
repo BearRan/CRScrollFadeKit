@@ -11,7 +11,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void(^FadeValueChangedBlock)(CGFloat fadeValue);
+/** fadeValue 渐变的数值
+ *  page 当前page，
+ *  pagingEnabled==NO时，page永远为0，
+ *  pagingEnabled==YES时，page会根据fadeDirection和scrollView的bounds来计算。从0开始计数
+*/
+typedef void(^FadeValueChangedBlock)(CGFloat fadeValue, NSInteger page);
 
 @interface CRScrollFadeListener : NSObject
 
@@ -41,6 +46,8 @@ typedef void(^FadeValueChangedBlock)(CGFloat fadeValue);
  *  0~1
  */
 @property(nonatomic, assign, readonly) CGFloat fadeValue;
+
+@property(nonatomic, assign) BOOL pagingEnabled;
 
 // fadeValue改变时的回调
 @property(nonatomic, copy) FadeValueChangedBlock fadeValueChangedBlock;

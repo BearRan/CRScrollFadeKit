@@ -60,9 +60,9 @@
             // 判断是否遵循协议
             if ([obj conformsToProtocol:@protocol(CRScrollFadeProtocol)]) {
                 // 判断是否实现了该方法
-                if ([obj respondsToSelector:@selector(cr_scrollViewContentOffSetDidChange:)]) {
+                if ([obj respondsToSelector:@selector(cr_scrollViewContentOffSetDidChange:scrollView:)]) {
                     // 发送消息
-                    [(id<CRScrollFadeProtocol>)obj cr_scrollViewContentOffSetDidChange:change];
+                    [(id<CRScrollFadeProtocol>)obj cr_scrollViewContentOffSetDidChange:change scrollView:self];
                 }
             }
         }];

@@ -34,7 +34,7 @@
 }
 
 #pragma mark - CRScrollFadeProtocol
-- (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change {
+- (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change scrollView:(UIScrollView *)scrollView {
     NSValue *oldValue = change[NSKeyValueChangeOldKey];
     NSValue *newValue = change[NSKeyValueChangeNewKey];
     
@@ -60,11 +60,38 @@
     
     NSAssert(self.fadeStartValue.floatValue < self.fadeEndValue.floatValue, @"fadeStartValue必须小于fadeEndValue");
     
+    if (self.pagingEnabled) {
+        [self pagingCaculateWithNewOffSet:newOffSet offValue:newOffSet + contentInsetValue scrollView:scrollView];
+    }else {
+        CGFloat resValue = [self normalCaculateWithNewOffSet:newOffSet offValue:newOffSet + contentInsetValue];
+        [self updateFadeValue:resValue page:0];
+    }
+}
+
+- (void)pagingCaculateWithNewOffSet:(CGFloat)newOffSet
+                           offValue:(CGFloat)offValue
+                         scrollView:(UIScrollView *)scrollView {
+    CGFloat pageSideLength = 0;
+    if (self.fadeDirection == CRScrollFadeDirection_Vert) {
+        // 垂直方向
+        pageSideLength = CGRectGetHeight(scrollView.frame);
+    }else if (self.fadeDirection == CRScrollFadeDirection_Horz) {
+        // 水平方向
+        pageSideLength = CGRectGetWidth(scrollView.frame);
+    }
+    NSInteger page = offValue / pageSideLength;
+    double pagingOffSet = fmod(newOffSet, pageSideLength);
+    
+    CGFloat resValue = [self normalCaculateWithNewOffSet:pagingOffSet offValue:offValue];
+    [self updateFadeValue:resValue page:page];
+}
+
+- (CGFloat)normalCaculateWithNewOffSet:(CGFloat)newOffSet
+                           offValue:(CGFloat)offValue {
     // 计算reaValue
     CGFloat resValue = 0;
     CGFloat fadeEndValue = self.fadeEndValue.floatValue;
     CGFloat fadeStartValue = self.fadeStartValue.floatValue;
-    CGFloat offValue = newOffSet + contentInsetValue;
     if (offValue > fadeEndValue) {
         resValue = 1;
     }else if (offValue < fadeStartValue) {
@@ -74,15 +101,15 @@
         resValue = 1.0 * (offValue - fadeStartValue) / deltaValue;
     }
     
-    [self updateFadeValue:resValue];
+    return resValue;
 }
 
 #pragma mark - Setter
-- (void)updateFadeValue:(CGFloat)fadeValue
+- (void)updateFadeValue:(CGFloat)fadeValue page:(NSInteger)page
 {
     _fadeValue = fadeValue;
     if (self.fadeValueChangedBlock) {
-        self.fadeValueChangedBlock(fadeValue);
+        self.fadeValueChangedBlock(fadeValue, page);
     }
 }
 

@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, CRScrollFadeDirection) {
 @protocol CRScrollFadeProtocol <NSObject>
 
 @optional
-- (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change;
+- (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change scrollView:(UIScrollView *)scrollView;
 
 @end
 

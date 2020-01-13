@@ -26,7 +26,8 @@
     
     self.mainScrollView = [CRTestScrollView new];
     self.mainScrollView.backgroundColor = [UIColor orangeColor];
-    self.mainScrollView.contentSize = CGSizeMake(1000, 1000);
+    self.mainScrollView.contentSize = CGSizeMake(10000, 10000);
+    self.mainScrollView.pagingEnabled = YES;
     [self.view addSubview:self.mainScrollView];
     [self.mainScrollView mas_makeConstraints:^(MASConstraintMaker *make) {
         make.edges.equalTo(@(UIEdgeInsetsZero));
@@ -36,11 +37,19 @@
     testView.backgroundColor = [UIColor blueColor];
     [self.mainScrollView addSubview:testView];
     
-    CRScrollFadeListener *fadeListener = [CRScrollFadeListener defaultConfig];
-    fadeListener.fadeValueChangedBlock = ^(CGFloat fadeValue) {
-        NSLog(@"--fadeValue:%f", fadeValue);
+    CRScrollFadeListener *fadeListenerVert = [CRScrollFadeListener defaultConfig];
+    fadeListenerVert.pagingEnabled = YES;
+    fadeListenerVert.fadeValueChangedBlock = ^(CGFloat fadeValue, NSInteger page) {
+        NSLog(@"--fadeListener-Vert:%f, page:%ld", fadeValue, (long)page);
     };
-    [self.mainScrollView cr_addScrollFadeListener:fadeListener];
+    [self.mainScrollView cr_addScrollFadeListener:fadeListenerVert];
+    
+    CRScrollFadeListener *fadeListenerHorz = [CRScrollFadeListener defaultConfig];
+    fadeListenerHorz.fadeDirection = CRScrollFadeDirection_Horz;
+    fadeListenerHorz.fadeValueChangedBlock = ^(CGFloat fadeValue, NSInteger page) {
+        NSLog(@"--fadeListener-Horz:%f, page:%ld", fadeValue, (long)page);
+    };
+    [self.mainScrollView cr_addScrollFadeListener:fadeListenerHorz];
 }
 
 
