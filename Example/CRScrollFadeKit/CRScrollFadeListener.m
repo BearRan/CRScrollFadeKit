@@ -35,7 +35,46 @@
 
 #pragma mark - CRScrollFadeProtocol
 - (void)cr_scrollViewContentOffSetDidChange:(NSDictionary *)change {
-    NSLog(@"--change000:%@", change);
+    NSValue *oldValue = change[NSKeyValueChangeOldKey];
+    NSValue *newValue = change[NSKeyValueChangeNewKey];
+    
+    CGFloat oldOffSet = 0;
+    CGFloat newOffSet = 0;
+    CGFloat contentInsetValue = 0;
+    
+    if (self.fadeDirection == CRScrollFadeDirection_Vert) {
+        // 垂直方向
+        oldOffSet = oldValue.UIOffsetValue.vertical;
+        newOffSet = newValue.UIOffsetValue.vertical;
+        contentInsetValue = self.contentInset.top;
+    }else if (self.fadeDirection == CRScrollFadeDirection_Horz) {
+        // 水平方向
+        oldOffSet = oldValue.UIOffsetValue.horizontal;
+        newOffSet = newValue.UIOffsetValue.horizontal;
+        contentInsetValue = self.contentInset.left;
+    }
+    
+    if (oldOffSet == newOffSet) {
+        return;
+    }
+    
+    NSAssert(self.fadeStartValue.floatValue < self.fadeEndValue.floatValue, @"fadeStartValue必须小于fadeEndValue");
+    
+    // 计算reaValue
+    CGFloat resValue = 0;
+    CGFloat fadeEndValue = self.fadeEndValue.floatValue;
+    CGFloat fadeStartValue = self.fadeStartValue.floatValue;
+    CGFloat offValue = newOffSet + contentInsetValue;
+    if (offValue > fadeEndValue) {
+        resValue = 1;
+    }else if (offValue < fadeStartValue) {
+        resValue = 0;
+    }else{
+        CGFloat deltaValue = fadeEndValue - fadeStartValue;
+        resValue = 1.0 * (offValue - fadeStartValue) / deltaValue;
+    }
+    
+    [self updateFadeValue:resValue];
 }
 
 #pragma mark - Setter
