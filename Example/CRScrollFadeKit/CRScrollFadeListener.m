@@ -61,15 +61,15 @@
     NSAssert(self.fadeStartValue.floatValue < self.fadeEndValue.floatValue, @"fadeStartValue必须小于fadeEndValue");
     
     if (self.pagingEnabled) {
-        [self pagingCaculateWithNewOffSet:newOffSet offValue:contentInsetValue scrollView:scrollView];
+        [self pagingCaculateWithNewOffSet:newOffSet contentInsetValue:contentInsetValue scrollView:scrollView];
     }else {
-        CGFloat resValue = [self normalCaculateWithNewOffSet:newOffSet offValue:newOffSet + contentInsetValue];
+        CGFloat resValue = [self caculateResValueWithOffValue:newOffSet + contentInsetValue];
         [self updateFadeValue:resValue page:0];
     }
 }
 
 - (void)pagingCaculateWithNewOffSet:(CGFloat)newOffSet
-                           offValue:(CGFloat)offValue
+                  contentInsetValue:(CGFloat)contentInsetValue
                          scrollView:(UIScrollView *)scrollView {
     CGFloat pageSideLength = 0;
     if (self.fadeDirection == CRScrollFadeDirection_Vert) {
@@ -80,19 +80,21 @@
         pageSideLength = CGRectGetWidth(scrollView.frame);
     }
     NSInteger page = 0;
+    CGFloat offValue = newOffSet + contentInsetValue;
     if (offValue != 0) {
         page = offValue / pageSideLength;
     }
-    double pagingOffSet = fmod(newOffSet, pageSideLength);
+    offValue = fmod(newOffSet, pageSideLength);
     
-    NSLog(@"--pagingOffSet:%f", pagingOffSet);
+    NSLog(@"--pagingOffSet:%f", offValue);
     
-    CGFloat resValue = [self normalCaculateWithNewOffSet:pagingOffSet offValue:offValue];
+    // 计算reaValue
+    CGFloat resValue = [self caculateResValueWithOffValue:offValue];
     [self updateFadeValue:resValue page:page];
 }
 
-- (CGFloat)normalCaculateWithNewOffSet:(CGFloat)newOffSet
-                           offValue:(CGFloat)offValue {
+- (CGFloat)caculateResValueWithOffValue:(CGFloat)offValue
+{
     // 计算reaValue
     CGFloat resValue = 0;
     CGFloat fadeEndValue = self.fadeEndValue.floatValue;
